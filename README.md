@@ -1,6 +1,7 @@
 # LekkageAlarm
 
 [![Open your Home Assistant instance and show the add repository dialog with a specific repository URL.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=lekkagealarm&repository=lekkagealarm)
+> **If you are installing from a fork:** update the `owner` query parameter in the badge link to match your GitHub username (e.g., `owner=your-name&repository=lekkagealarm`). Using the placeholder `your-username` will result in a “repository not found” error in HACS.
 
 **LekkageAlarm** is a Home Assistant custom integration that monitors a chosen sensor (or other entity) for specific states (e.g., a water leak sensor reporting "wet") and sends alerts to a remote collector service. It also periodically sends heartbeat messages to the remote server to confirm that your Home Assistant is online. This integration supports configuration via the Home Assistant UI (config flow) or via YAML, and uses a secure pairing process to exchange a one-time code for a permanent authentication token.
 
