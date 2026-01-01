@@ -1,6 +1,7 @@
 # LekkageAlarm
 
-[![Open your Home Assistant instance and show the add repository dialog with a specific repository URL.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=your-username&repository=lekkagealarm)
+[![Open your Home Assistant instance and show the add repository dialog with a specific repository URL.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=lekkagealarm&repository=lekkagealarm)
+> **If you are installing from a fork:** update the `owner` query parameter in the badge link to match your GitHub username (e.g., `owner=your-name&repository=lekkagealarm`). Using the placeholder `your-username` will result in a “repository not found” error in HACS.
 
 **LekkageAlarm** is a Home Assistant custom integration that monitors a chosen sensor (or other entity) for specific states (e.g., a water leak sensor reporting "wet") and sends alerts to a remote collector service. It also periodically sends heartbeat messages to the remote server to confirm that your Home Assistant is online. This integration supports configuration via the Home Assistant UI (config flow) or via YAML, and uses a secure pairing process to exchange a one-time code for a permanent authentication token.
 
@@ -19,8 +20,8 @@
 
 ### HACS (Home Assistant Community Store)
 
-1. **Add Custom Repository:** In HACS, go to **Integrations**, click the three dots menu > **Custom repositories**, and add this repository's URL (GitHub `your-username/lekkagealarm`) as an Integration.
-2. **Install Integration:** After adding the repo, find **LekkageAlarm** in the HACS integrations list and click **Download**. Alternatively, click the blue **Add to HACS** badge above to open HACS directly with this repository.
+1. **Add Custom Repository:** In HACS, go to **Integrations**, click the three dots menu > **Custom repositories**, and add this repository's URL (GitHub `lekkagealarm/lekkagealarm`) as an Integration. If you are using a fork, replace the owner with your GitHub username (e.g., `your-name/lekkagealarm`).
+2. **Install Integration:** After adding the repo, find **LekkageAlarm** in the HACS integrations list and click **Download**. Alternatively, click the blue **Add to HACS** badge above to open HACS directly with this repository (ensure the `owner` query parameter matches the repository you are installing).
 3. **Restart Home Assistant:** After installation, restart Home Assistant to load the new integration.
 
 ### Manual Installation
