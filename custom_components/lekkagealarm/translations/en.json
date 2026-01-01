@@ -1,0 +1,26 @@
+{
+  "title": "LekkageAlarm",
+  "config": {
+    "step": {
+      "user": {
+        "title": "LekkageAlarm Setup",
+        "description": "Configure LekkageAlarm: pair with the collector service and choose a sensor to monitor.",
+        "data": {
+          "collector_url": "Collector API URL",
+          "pairing_code": "Pairing Code",
+          "entity_id": "Entity to Monitor",
+          "attribute": "Attribute (optional)",
+          "monitored_states": "Trigger State(s)",
+          "heartbeat_interval": "Heartbeat Interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "pair_failed": "Failed to pair with server. Check the URL and pairing code.",
+      "already_configured": "This sensor is already configured."
+    },
+    "abort": {
+      "already_configured": "This sensor is already configured."
+    }
+  }
+}
