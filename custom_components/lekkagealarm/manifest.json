@@ -1,0 +1,10 @@
+{
+  "domain": "lekkagealarm",
+  "name": "LekkageAlarm",
+  "version": "1.0.0",
+  "config_flow": true,
+  "documentation": "https://github.com/your-username/lekkagealarm",
+  "requirements": [],
+  "codeowners": ["@your-username"],
+  "iot_class": "cloud_push"
+}
