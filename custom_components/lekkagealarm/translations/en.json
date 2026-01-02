@@ -2,12 +2,18 @@
   "title": "LekkageAlarm",
   "config": {
     "step": {
-      "user": {
-        "title": "LekkageAlarm Setup",
-        "description": "Configure LekkageAlarm: pair with the collector service and choose a sensor to monitor.",
+      "settings": {
+        "title": "Collector Settings",
+        "description": "Pair with the collector service. The pairing code is only needed the first time you connect to this collector URL.",
         "data": {
           "collector_url": "Collector API URL",
-          "pairing_code": "Pairing Code",
+          "pairing_code": "Pairing Code (optional after first pairing)"
+        }
+      },
+      "device": {
+        "title": "Device and Triggers",
+        "description": "Select the entity to monitor and the trigger states that should be sent to the collector.",
+        "data": {
           "entity_id": "Entity to Monitor",
           "attribute": "Attribute (optional)",
           "monitored_states": "Trigger State(s)",
@@ -17,6 +23,7 @@
     },
     "error": {
       "pair_failed": "Failed to pair with server. Check the URL and pairing code.",
+      "missing_pairing_code": "Provide a pairing code for this collector URL the first time you set it up.",
       "already_configured": "This sensor is already configured."
     },
     "abort": {
