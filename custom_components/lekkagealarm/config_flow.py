@@ -37,6 +37,16 @@ class LekkageAlarmConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input=None):
         """Entry point for the flow."""
+        if user_input is None:
+            existing = self._get_existing_token()
+            if existing:
+                collector_url, token = existing
+                self._settings = {
+                    CONF_COLLECTOR_URL: collector_url,
+                    CONF_TOKEN: token,
+                }
+                self._cached_token = token
+                return await self.async_step_device()
         return await self.async_step_settings(user_input)
 
     async def async_step_settings(self, user_input=None):
@@ -180,6 +190,15 @@ class LekkageAlarmConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 token = entry.data.get(CONF_TOKEN)
                 if token:
                     return token
+        return None
+
+    def _get_existing_token(self):
+        """Return the first existing collector URL + token if any are configured."""
+        for entry in self._async_current_entries():
+            url = entry.data.get(CONF_COLLECTOR_URL)
+            token = entry.data.get(CONF_TOKEN)
+            if url and token:
+                return url, token
         return None
 
     async def _async_pair(self, base_url: str, code: str) -> str:
