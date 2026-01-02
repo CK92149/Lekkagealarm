@@ -54,7 +54,7 @@ CONFIG_SCHEMA = vol.Schema(
                             vol.Optional(CONF_PAIRING_CODE): cv.string,
                             vol.Required(CONF_ENTITY_ID): cv.entity_id,
                             vol.Optional(CONF_ATTRIBUTE, default=DEFAULT_ATTRIBUTE): cv.string,
-                            vol.Required(CONF_MONITORED_STATES): vol.All(
+                            vol.Optional(CONF_MONITORED_STATES, default=[]): vol.All(
                                 cv.ensure_list, [cv.string]
                             ),
                             vol.Optional(
@@ -176,7 +176,9 @@ class LekkageAlarmMonitor:
             str_new = str(new_val).lower()
             str_old = str(old_val).lower() if old_val is not None else None
 
-            if str_new != str_old and str_new in self.trigger_states:
+            if str_new != str_old and (
+                not self.trigger_states or str_new in self.trigger_states
+            ):
                 _LOGGER.info(
                     "LekkageAlarm: Detected state change for %s: %s -> %s",
                     self.entity_id,
@@ -210,7 +212,7 @@ class LekkageAlarmMonitor:
                 cur_val = current_state.state
             if cur_val is not None:
                 cur_val_str = str(cur_val).lower()
-                if cur_val_str in self.trigger_states:
+                if not self.trigger_states or cur_val_str in self.trigger_states:
                     _LOGGER.info(
                         "LekkageAlarm: Initial state of %s is '%s' which is a trigger, sending initial event.",
                         self.entity_id,

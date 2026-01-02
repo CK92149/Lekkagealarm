@@ -95,31 +95,26 @@ class LekkageAlarmConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             monitored_states = self._normalize_monitored_states(
                 user_input.get(CONF_MONITORED_STATES)
             )
-            if not monitored_states:
-                errors["base"] = "pair_failed"
-            else:
-                data = {
-                    CONF_COLLECTOR_URL: self._settings[CONF_COLLECTOR_URL],
-                    CONF_TOKEN: self._cached_token,
-                    CONF_ENTITY_ID: user_input[CONF_ENTITY_ID],
-                    CONF_ATTRIBUTE: user_input.get(CONF_ATTRIBUTE) or None,
-                    CONF_MONITORED_STATES: monitored_states,
-                    CONF_HEARTBEAT_INTERVAL: user_input.get(
-                        CONF_HEARTBEAT_INTERVAL, DEFAULT_HEARTBEAT_INTERVAL
-                    ),
-                }
-                await self.async_set_unique_id(
-                    f"{data[CONF_COLLECTOR_URL]}-"
-                    f"{data[CONF_ENTITY_ID]}-{data[CONF_ATTRIBUTE] or 'state'}"
-                )
-                self._abort_if_unique_id_configured()
-                name = data[CONF_ENTITY_ID]
-                state_obj = self.hass.states.get(data[CONF_ENTITY_ID])
-                if state_obj and state_obj.name:
-                    name = state_obj.name
-                return self.async_create_entry(
-                    title=f"{name} LekkageAlarm", data=data
-                )
+            data = {
+                CONF_COLLECTOR_URL: self._settings[CONF_COLLECTOR_URL],
+                CONF_TOKEN: self._cached_token,
+                CONF_ENTITY_ID: user_input[CONF_ENTITY_ID],
+                CONF_ATTRIBUTE: user_input.get(CONF_ATTRIBUTE) or None,
+                CONF_MONITORED_STATES: monitored_states,
+                CONF_HEARTBEAT_INTERVAL: user_input.get(
+                    CONF_HEARTBEAT_INTERVAL, DEFAULT_HEARTBEAT_INTERVAL
+                ),
+            }
+            await self.async_set_unique_id(
+                f"{data[CONF_COLLECTOR_URL]}-"
+                f"{data[CONF_ENTITY_ID]}-{data[CONF_ATTRIBUTE] or 'state'}"
+            )
+            self._abort_if_unique_id_configured()
+            name = data[CONF_ENTITY_ID]
+            state_obj = self.hass.states.get(data[CONF_ENTITY_ID])
+            if state_obj and state_obj.name:
+                name = state_obj.name
+            return self.async_create_entry(title=f"{name} LekkageAlarm", data=data)
 
         data_schema = vol.Schema(
             {
@@ -127,7 +122,7 @@ class LekkageAlarmConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     EntitySelectorConfig()
                 ),
                 vol.Optional(CONF_ATTRIBUTE, default=""): str,
-                vol.Required(CONF_MONITORED_STATES): SelectSelector(
+                vol.Optional(CONF_MONITORED_STATES, default=[]): SelectSelector(
                     SelectSelectorConfig(
                         options=[],
                         multiple=True,
@@ -176,10 +171,14 @@ class LekkageAlarmConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if value is None:
             return []
         if isinstance(value, list):
-            states = [str(item).strip() for item in value if str(item).strip()]
-        else:
-            states = [s.strip() for s in str(value).split(",") if s.strip()]
-        return states
+            out: list[str] = []
+            for item in value:
+                for part in str(item).split(","):
+                    part = part.strip()
+                    if part:
+                        out.append(part)
+            return out
+        return [s.strip() for s in str(value).split(",") if s.strip()]
 
     def _get_cached_token(self, collector_url: str):
         """Return token from existing entries for this collector URL, if any."""

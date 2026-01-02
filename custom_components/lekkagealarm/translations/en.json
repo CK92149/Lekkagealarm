@@ -16,7 +16,7 @@
         "data": {
           "entity_id": "Entity to Monitor",
           "attribute": "Attribute (optional)",
-          "monitored_states": "Trigger State(s)",
+          "monitored_states": "Trigger State(s) (leave blank for any change)",
           "heartbeat_interval": "Heartbeat Interval (seconds)"
         }
       }
