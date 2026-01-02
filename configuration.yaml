@@ -1,0 +1,10 @@
+# Example configuration.yaml entry for LekkageAlarm integration (optional YAML setup)
+lekkagealarm:
+  - collector_url: "https://api.example.com/leak"
+    pairing_code: "ABC12345"
+    entity_id: binary_sensor.water_leak_sensor_1
+    attribute: water        # optional attribute to monitor
+    monitored_states:
+      - "wet"
+      - "dry"
+    heartbeat_interval: 3600
