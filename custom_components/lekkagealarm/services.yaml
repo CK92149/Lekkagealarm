@@ -1,0 +1,15 @@
+send_heartbeat:
+  name: "Send Heartbeat"
+  description: "Immediately send a heartbeat message to the configured collector server."
+  fields:
+    entity_id:
+      description: "Optional. Entity ID or list of entity IDs of the sensor(s) monitored by LekkageAlarm to send a heartbeat for. If omitted, all LekkageAlarm instances will send a heartbeat."
+      example: "binary_sensor.water_leak_sensor_1"
+
+send_state:
+  name: "Send State Update"
+  description: "Send the current state of the monitored sensor to the collector server (trigger a manual state update)."
+  fields:
+    entity_id:
+      description: "Optional. Entity ID or list of entity IDs of the sensor(s) to send their current state. If omitted, all configured LekkageAlarm sensors will send state updates."
+      example: "binary_sensor.water_leak_sensor_1"
